@@ -3,6 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>AI枠連予想フォーム（GPT-5）</title>
+<!-- PWA：manifest -->
+<link rel="manifest" href="manifest.json">
+
+<!-- アイコン -->
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<!-- PWA：iPhone対策 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<!-- サービスワーカー登録 -->
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+            .catch(err => console.log('SW Error:', err));
+    });
+}
+</script>
 </head>
 <body>
     <h1>AI枠連予想フォーム（GPT-5 API）</h1>
