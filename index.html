@@ -1,44 +1,70 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>AI枠連予想フォーム（GPT-5）</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>AI枠連予想フォーム（GPT-5）</title>
+
 <!-- PWA：manifest -->
 <link rel="manifest" href="manifest.json">
 
 <!-- アイコン -->
-<link rel="icon" href="https://raw.githubusercontent.com/yagi0922/waku-tool/refs/heads/main/192.png" type="image/png">
-<link rel="apple-touch-icon" href="https://raw.githubusercontent.com/yagi0922/waku-tool/refs/heads/main/192.png">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-192.png">
 
-<!-- PWA：iPhone対策 -->
+<!-- iPhone：フルスクリーン表示 -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<!-- CSS で文字サイズを最適化（ズーム防止） -->
+<style>
+    body {
+        font-size: 16px; /* iPhone自動ズーム対策 */
+        padding: 20px;
+        line-height: 1.6;
+        background: #fafafa;
+        font-family: sans-serif;
+    }
+    input, textarea {
+        font-size: 16px; /* ズーム防止 */
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+    }
+    button {
+        font-size: 18px;
+        padding: 10px 20px;
+        margin-top: 10px;
+        width: 100%;
+    }
+</style>
 
 <!-- サービスワーカー登録 -->
 <script>
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js')
-            .catch(err => console.log('SW Error:', err));
+        .catch(err => console.log('SW Error:', err));
     });
 }
 </script>
+
 </head>
 <body>
-    <h1>AI枠連予想フォーム（GPT-5 API）</h1>
 
-    <p>あなたの OpenAI APIキー を入力してください：</p>
-    <input id="apiKey" type="password" placeholder="sk- から始まるキー" style="width:300px">
-    <br><br>
+<h1>AI枠連予想フォーム（GPT-5 API）</h1>
 
-    <p>予想したいレース情報を入力：</p>
-    <textarea id="raceInfo" rows="5" cols="50" placeholder="例：東京10R 1600m ダート 騎手データ…"></textarea>
-    <br><br>
+<p>あなたの OpenAI APIキー を入力してください：</p>
+<input id="apiKey" type="password" placeholder="sk- から始まるキー">
 
-    <button onclick="runAI()">AIに枠連予想してもらう</button>
+<p>予想したいレース情報を入力：</p>
+<textarea id="raceInfo" rows="5" placeholder="例：東京10R 1600m ダート 騎手データ…"></textarea>
 
-    <h2>【結果】</h2>
-    <pre id="result"></pre>
+<button onclick="runAI()">AIに枠連予想してもらう</button>
+
+<h2>【結果】</h2>
+<pre id="result"></pre>
 
 <script>
 async function runAI() {
