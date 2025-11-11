@@ -1,23 +1,38 @@
+// 即時更新（古いSWを残さない）
+self.addEventListener('install', () => {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', () => {
+  clients.claim();
+});
+
+// キャッシュ名
+const CACHE_NAME = 'waku-ai-v2';
+
+// キャッシュするファイル
+const FILES_TO_CACHE = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png'
+];
+
+// インストール（キャッシュ登録）
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open('waku-ai-v1').then((cache) => {
-      return cache.addAll([
-        './',
-        './index.html',
-        './manifest.json',
-
-        // 外部URLはそのまま書く（./ は絶対に付けない）
-        'https://raw.githubusercontent.com/yagi0922/waku-tool/refs/heads/main/192.png',
-        'https://raw.githubusercontent.com/yagi0922/waku-tool/refs/heads/main/512.png'
-      ]);
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(FILES_TO_CACHE);
     })
   );
 });
 
+// リソース取得
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then((res) => {
-      return res || fetch(event.request);
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
     })
   );
 });
