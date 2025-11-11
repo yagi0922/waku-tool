@@ -5,8 +5,10 @@ self.addEventListener('install', (event) => {
         './',
         './index.html',
         './manifest.json',
-        './https://raw.githubusercontent.com/yagi0922/waku-tool/refs/heads/main/192.png',
-        './https://raw.githubusercontent.com/yagi0922/waku-tool/refs/heads/main/512.png'
+
+        // 外部URLはそのまま書く（./ は絶対に付けない）
+        'https://raw.githubusercontent.com/yagi0922/waku-tool/refs/heads/main/192.png',
+        'https://raw.githubusercontent.com/yagi0922/waku-tool/refs/heads/main/512.png'
       ]);
     })
   );
