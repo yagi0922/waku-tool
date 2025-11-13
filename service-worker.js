@@ -8,7 +8,7 @@ self.addEventListener('activate', () => {
 });
 
 // キャッシュ名
-const CACHE_NAME = 'waku-ai-v2';
+const CACHE_NAME = 'waku-ai-v3';
 
 // キャッシュするファイル
 const FILES_TO_CACHE = [
